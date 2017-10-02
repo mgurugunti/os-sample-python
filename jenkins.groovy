@@ -18,11 +18,6 @@ node('master') {
   env.STAGE1 = "${projectBase}"
   env.STAGE2 = "${projectBase}-stage"
   
-
-  sh(returnStdout: true, script: "${env.OC_CMD} get is jenkins-slave-image-mgmt --template=\'{{ .status.dockerImageRepository }}\' -n openshift > /tmp/jenkins-slave-image-mgmt.out")
-  env.SKOPEO_SLAVE_IMAGE = readFile('/tmp/jenkins-slave-image-mgmt.out').trim()
-  println "${env.SKOPEO_SLAVE_IMAGE}"
-
 }
 
 node('maven') {
@@ -36,7 +31,9 @@ node('maven') {
 
   
   stage('Build Image') {
-println "Building Image"    
+println "Building Image"  
+    openshiftBuild apiURL: "${ocpApiServer}", authToken: "${env.TOKEN}", bldCfg: 'maheshpythontest', buildName: 'maheshpythontest', checkForTriggeredDeployments: 'false', namespace: "${STAGE1}"
+
   }
 
   stage("Verify Deployment to ${env.STAGE1}") {
