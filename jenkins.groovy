@@ -32,7 +32,7 @@ node('maven') {
   
   stage('Build Image') {
 println "Building Image"  
-    openshiftBuild apiURL: "${ocpApiServer}", authToken: "${env.TOKEN}", bldCfg: 'maheshpythontest1', buildName: 'maheshpythontest2', checkForTriggeredDeployments: 'false', namespace: "${STAGE1}"
+    openshiftBuild apiURL: "${ocpApiServer}", authToken: "${env.TOKEN}", bldCfg: 'maheshpythontest', checkForTriggeredDeployments: 'false', namespace: "${STAGE1}"
 
   }
 
